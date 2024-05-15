@@ -41,6 +41,8 @@ local_parameters = [{'name': 'camera_name',                  'default': 'camera'
                     {'name': 'enable_depth',                 'default': 'true', 'description': 'enable depth stream'},
                     {'name': 'pointcloud.enable',            'default': 'true', 'description': 'enable pointcloud'},
                     {'name': 'clip_distance',            'default': '0.5', 'description': ''},
+                    {'name': 'align_depth.enable',           'default': 'true', 'description': 'enable align depth filter'},
+                    {'name': 'enable_sync',                  'default': 'true', 'description': 'enable sync mode'},
 
                    ]
 
