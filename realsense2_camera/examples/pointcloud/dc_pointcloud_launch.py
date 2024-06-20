@@ -40,7 +40,7 @@ local_parameters = [{'name': 'camera_name',                  'default': 'camera'
                     {'name': 'enable_color',                 'default': 'true', 'description': 'enable color stream'},
                     {'name': 'enable_depth',                 'default': 'true', 'description': 'enable depth stream'},
                     {'name': 'pointcloud.enable',            'default': 'true', 'description': 'enable pointcloud'},
-                    {'name': 'clip_distance',            'default': '0.5', 'description': ''},
+                    {'name': 'clip_distance',            'default': '0.6', 'description': ''},
                     {'name': 'align_depth.enable',           'default': 'true', 'description': 'enable align depth filter'},
                     {'name': 'enable_sync',                  'default': 'true', 'description': 'enable sync mode'},
 
@@ -93,5 +93,18 @@ def generate_launch_description():
             namespace='',
             output='screen',
             arguments=[urdf]
+        ),
+        launch_ros.actions.Node(
+            package='point_cloud_dev',
+            executable='depthRgbsub_pcpub',
+            name='depthRgbsub_pcpub',
+            output='screen'
+        ),
+        launch_ros.actions.Node(
+            package='point_cloud_dev',
+            executable='coarse_fine_registration',
+            name='coarse_fine_registration',
+            output='screen'
         )
+        
     ])
