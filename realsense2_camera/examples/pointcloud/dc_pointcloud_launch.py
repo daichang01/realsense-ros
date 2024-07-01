@@ -40,10 +40,17 @@ local_parameters = [{'name': 'camera_name',                  'default': 'camera'
                     {'name': 'enable_color',                 'default': 'true', 'description': 'enable color stream'},
                     {'name': 'enable_depth',                 'default': 'true', 'description': 'enable depth stream'},
                     {'name': 'pointcloud.enable',            'default': 'true', 'description': 'enable pointcloud'},
-                    {'name': 'clip_distance',            'default': '0.6', 'description': ''},
+                    {'name': 'clip_distance',            'default': '1.0', 'description': ''},
                     {'name': 'align_depth.enable',           'default': 'true', 'description': 'enable align depth filter'},
                     {'name': 'enable_sync',                  'default': 'true', 'description': 'enable sync mode'},
-
+                    {'name': 'rgb_camera.profile',           'default': '1280,720,30', 'description': 'color image width'},
+                    {'name': 'depth_module.profile',         'default': '1280,720,30', 'description': 'depth module profile'},
+                    {'name': 'depth_module.hdr_enabled', 'default': 'true', 'description': 'Depth module hdr enablement flag. Used for hdr_merge filter'},
+                    {'name': 'depth_module.exposure.1', 'default': '5000', 'description': 'Depth module first exposure value. Used for hdr_merge filter'},
+                    {'name': 'depth_module.gain.1', 'default': '16', 'description': 'Depth module first gain value. Used for hdr_merge filter'},
+                    {'name': 'depth_module.exposure.2', 'default': '2000', 'description': 'Depth module second exposure value. Used for hdr_merge filter'},
+                    {'name': 'depth_module.gain.2', 'default': '16', 'description': 'Depth module second gain value. Used for hdr_merge filter'},
+                    {'name': 'depth_module.enable_auto_exposure', 'default': 'false', 'description': 'enable/disable auto exposure for depth image'},
                    ]
 
 def to_urdf(xacro_path, parameters=None):
@@ -69,6 +76,18 @@ def generate_launch_description():
     params = rs_launch.configurable_parameters
     xacro_path = os.path.join(get_package_share_directory('realsense2_description'), 'urdf', 'test_d405_camera.urdf.xacro')
     urdf = to_urdf(xacro_path, {'use_nominal_extrinsics': 'true', 'add_plug': 'true'})
+
+    aruco_params = os.path.join(
+        get_package_share_directory('ros2_aruco'),
+        'config',
+        'aruco_parameters.yaml'
+    )
+
+    aruco_node = launch_ros.actions.Node(
+        package='ros2_aruco',
+        executable='board_calibration_node',
+        parameters=[aruco_params]
+    )
     return LaunchDescription(
         rs_launch.declare_configurable_parameters(local_parameters) +
         rs_launch.declare_configurable_parameters(params) + 
@@ -94,17 +113,18 @@ def generate_launch_description():
             output='screen',
             arguments=[urdf]
         ),
-        launch_ros.actions.Node(
-            package='point_cloud_dev',
-            executable='depthRgbsub_pcpub',
-            name='depthRgbsub_pcpub',
-            output='screen'
-        ),
-        launch_ros.actions.Node(
-            package='point_cloud_dev',
-            executable='coarse_fine_registration',
-            name='coarse_fine_registration',
-            output='screen'
-        )
+        aruco_node
+        # launch_ros.actions.Node(
+        #     package='point_cloud_dev',
+        #     executable='depthRgbsub_pcpub',
+        #     name='depthRgbsub_pcpub',
+        #     output='screen'
+        # ),
+        # launch_ros.actions.Node(
+        #     package='point_cloud_dev',
+        #     executable='coarse_fine_registration',
+        #     name='coarse_fine_registration',
+        #     output='screen'
+        # )
         
     ])
