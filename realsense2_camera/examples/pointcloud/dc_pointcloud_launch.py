@@ -45,12 +45,9 @@ local_parameters = [{'name': 'camera_name',                  'default': 'camera'
                     {'name': 'enable_sync',                  'default': 'true', 'description': 'enable sync mode'},
                     {'name': 'rgb_camera.profile',           'default': '1280,720,30', 'description': 'color image width'},
                     {'name': 'depth_module.profile',         'default': '1280,720,30', 'description': 'depth module profile'},
-                    {'name': 'depth_module.hdr_enabled', 'default': 'true', 'description': 'Depth module hdr enablement flag. Used for hdr_merge filter'},
-                    {'name': 'depth_module.exposure.1', 'default': '5000', 'description': 'Depth module first exposure value. Used for hdr_merge filter'},
-                    {'name': 'depth_module.gain.1', 'default': '16', 'description': 'Depth module first gain value. Used for hdr_merge filter'},
-                    {'name': 'depth_module.exposure.2', 'default': '2000', 'description': 'Depth module second exposure value. Used for hdr_merge filter'},
-                    {'name': 'depth_module.gain.2', 'default': '16', 'description': 'Depth module second gain value. Used for hdr_merge filter'},
                     {'name': 'depth_module.enable_auto_exposure', 'default': 'false', 'description': 'enable/disable auto exposure for depth image'},
+                    {'name': 'depth_module.exposure',        'default': '120000', 'description': 'Depth module manual exposure value'},
+                    # {'name': 'rgb_camera.enable_auto_exposure', 'default': 'true', 'description': 'enable/disable auto exposure for color image'},
                    ]
 
 def to_urdf(xacro_path, parameters=None):
