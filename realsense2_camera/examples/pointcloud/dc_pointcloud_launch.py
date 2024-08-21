@@ -46,7 +46,7 @@ local_parameters = [{'name': 'camera_name',                  'default': 'camera'
                     {'name': 'rgb_camera.profile',           'default': '1280,720,30', 'description': 'color image width'},
                     {'name': 'depth_module.profile',         'default': '1280,720,30', 'description': 'depth module profile'},
                     {'name': 'depth_module.enable_auto_exposure', 'default': 'false', 'description': 'enable/disable auto exposure for depth image'},
-                    {'name': 'depth_module.exposure',        'default': '20000', 'description': 'Depth module manual exposure value'},
+                    {'name': 'depth_module.exposure',        'default': '80000', 'description': 'Depth module manual exposure value'},
                     # {'name': 'rgb_camera.enable_auto_exposure', 'default': 'true', 'description': 'enable/disable auto exposure for color image'},
                    ]
 
